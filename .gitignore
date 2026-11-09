@@ -10,3 +10,6 @@ dist/
 coverage/
 *.egg-info/
 .DS_Store
+synthetic-mutual-nda.docx
+frontend/test-results/
+frontend/playwright-report/

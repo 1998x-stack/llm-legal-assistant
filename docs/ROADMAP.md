@@ -16,4 +16,4 @@ This is an implementation plan, **not** a record of production readiness.
 Source requirements: [PRD](https://github.com/1998x-stack/projects/blob/main/projects/professional/llm-legal-assistant/reports/prd-v1.0.md) · [MVP specification](https://github.com/1998x-stack/projects/blob/main/projects/professional/llm-legal-assistant/reports/mvp-functional-spec-v1.0.md).
 
 ## Next engineering gate
-Run backend pytest and frontend build in GitHub Actions. Any failure blocks claims of a working prototype. Before any customer pilot, replace demo auth, SQLite storage and example playbook; conduct independent lawyer review and security assessment.
+Run backend pytest, frontend build, and Playwright Chromium E2E in GitHub Actions. Any failure blocks claims of a working prototype. Before any customer pilot, replace demo auth, SQLite storage and example playbook; conduct independent lawyer review and security assessment.

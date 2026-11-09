@@ -27,3 +27,30 @@ jobs:
           node-version: '22'
       - run: npm install --prefix frontend --no-audit --no-fund
       - run: npm --prefix frontend run build
+  browser-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: pip install -r backend/requirements.txt
+      - run: npm install --prefix frontend --no-audit --no-fund
+      - run: python scripts/generate_synthetic_nda.py --out ./synthetic-mutual-nda.docx
+      - run: npm --prefix frontend exec -- playwright install --with-deps chromium
+      - run: npm --prefix frontend run test:e2e
+      - name: Upload diagnostic artifacts only on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-failure-artifacts
+          path: |
+            frontend/test-results/
+            frontend/playwright-report/
+          retention-days: 7

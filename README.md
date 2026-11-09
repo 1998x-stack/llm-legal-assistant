@@ -43,7 +43,7 @@ infra/              Explicitly reserved for production hardening
 tests/              Test guidance + synthetic fixtures
 scripts/            Synthetic NDA generator
 docs/               Roadmap, API contract, security limitations
-.github/workflows/  Backend pytest and frontend typecheck/build
+.github/workflows/  Backend pytest, frontend typecheck/build, and Playwright browser E2E
 ```
 
 ## What works, and what does not
@@ -64,6 +64,9 @@ Run tests:
 ```bash
 python -m pytest backend/tests -q
 npm --prefix frontend run build
+# Full browser E2E: first generate the synthetic document and install Chromium
+npm --prefix frontend exec -- playwright install chromium
+npm --prefix frontend run test:e2e
 ```
 
 See [Roadmap](docs/ROADMAP.md), [API](docs/API.md), [Security](docs/SECURITY.md), [Backend](backend/README.md) and [Frontend](frontend/README.md). For legal quality and customer pilots, independent counsel approval and security reviews are mandatory; synthetic unit tests are **not evidence of legal accuracy**.
