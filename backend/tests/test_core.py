@@ -67,6 +67,18 @@ def test_absence_is_coverage_not_fabricated_source():
     assert len(status["examined_block_ids"]) == len(blocks)
 
 
+def test_perpetuity_variant_is_flagged_with_exact_anchor():
+    parsed = parse_document("nda.docx", synthetic_docx(BASE + [
+        "Obligations survive in perpetuity."
+    ]))
+    findings, coverage = inspect_synthetic_rules(parsed.blocks)
+    item = next(f for f in findings if f["rule_id"] == "SYN-TERM")
+    assert item["anchor"]["exact_quote"] == "perpetuity"
+    block = next(b for b in parsed.blocks if b.block_id == item["anchor"]["block_id"])
+    assert verify_anchor(block, item["anchor"])
+    assert next(c for c in coverage if c["rule_id"] == "SYN-TERM")["outcome"] == "matched"
+
+
 def test_invalid_signature_and_empty_pdf_fail_closed():
     with pytest.raises(DocumentError) as exc:
         parse_document("nda.docx", b"Not a docx")

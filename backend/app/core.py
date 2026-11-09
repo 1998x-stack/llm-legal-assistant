@@ -181,7 +181,7 @@ def inspect_synthetic_rules(blocks: tuple[Block, ...]) -> tuple[list[dict], list
     coverage: list[dict] = []
     all_blocks = [b.block_id for b in blocks]
     cases = (
-        ("SYN-TERM", re.compile(r"\bperpetual(?:ly)?\b", re.I),
+        ("SYN-TERM", re.compile(r"\bperpetu(?:al(?:ly)?|ity)\b", re.I),
          "A perpetual-term phrase warrants human review", "Consider reviewing the duration with counsel"),
         ("SYN-PURPOSE", re.compile(r"\bany\s+purpose\b", re.I),
          "A broad-use phrase warrants human review", "Clarify the permitted purpose with counsel"),

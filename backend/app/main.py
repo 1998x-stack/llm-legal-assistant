@@ -225,6 +225,9 @@ def list_matters(user: dict = Depends(auth)):
 @app.post("/v1/matters/{matter_id}/documents", status_code=201)
 async def upload_document(matter_id: str, file: UploadFile = File(...),
                           user: dict = Depends(auth)):
+    # Check matter authorization before parsing potentially expensive untrusted bytes.
+    with db_connection() as db:
+        get_matter(db, matter_id, user)
     data = await file.read(MAX_BYTES + 1)
     try:
         parsed = parse_document(file.filename or "", data)
